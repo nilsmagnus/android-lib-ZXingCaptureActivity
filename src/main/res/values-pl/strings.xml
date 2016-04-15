@@ -19,7 +19,7 @@
  limitations under the License.
  -->
 <resources>
-  <string name="button_ok">OK</string>
-  <string name="msg_camera_framework_bug">Przepraszamy, aparat Android napotkał problem. Może wystąpić potrzeba ponownego uruchomienia urządzenia.</string>
-  <string name="msg_default_status">Umieść kod paskowy w prostokącie wizjera aby zeskanować.</string>
+  <string name="zbutton_ok">OK</string>
+  <string name="zmsg_camera_framework_bug">Przepraszamy, aparat Android napotkał problem. Może wystąpić potrzeba ponownego uruchomienia urządzenia.</string>
+  <string name="zmsg_default_status">Umieść kod paskowy w prostokącie wizjera aby zeskanować.</string>
 </resources>

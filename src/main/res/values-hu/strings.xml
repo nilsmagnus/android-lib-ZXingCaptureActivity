@@ -19,7 +19,7 @@
  limitations under the License.
  -->
 <resources>
-  <string name="button_ok">OK</string>
-  <string name="msg_camera_framework_bug">Android kamera hiba. Lehet, hogy újra kell indítania a készüléket.</string>
-  <string name="msg_default_status">Pozícionálja a vonalkódot a kereső téglalapba a szkenneléshez.</string>
+  <string name="zbutton_ok">OK</string>
+  <string name="zmsg_camera_framework_bug">Android kamera hiba. Lehet, hogy újra kell indítania a készüléket.</string>
+  <string name="zmsg_default_status">Pozícionálja a vonalkódot a kereső téglalapba a szkenneléshez.</string>
 </resources>

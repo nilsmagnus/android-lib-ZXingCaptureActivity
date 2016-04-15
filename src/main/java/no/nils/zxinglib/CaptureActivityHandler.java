@@ -77,7 +77,7 @@ public final class CaptureActivityHandler extends Handler {
 
   @Override
   public void handleMessage(Message message) {
-    if (message.what == R.id.decode_succeeded) {
+    if (message.what == R.id.zdecode_succeeded) {
         Log.d(TAG, "Got decode succeeded message");
         state = State.SUCCESS;
         Bundle bundle = message.getData();
@@ -93,11 +93,11 @@ public final class CaptureActivityHandler extends Handler {
           scaleFactor = bundle.getFloat(DecodeThread.BARCODE_SCALED_FACTOR);          
         }
         activity.handleDecode((Result) message.obj, barcode, scaleFactor);
-    } else if (message.what == R.id.decode_failed) {
+    } else if (message.what == R.id.zdecode_failed) {
         // We're decoding as fast as possible, so when one decode fails, start another.
         state = State.PREVIEW;
-        cameraManager.requestPreviewFrame(decodeThread.getHandler(), R.id.decode);
-    } else if (message.what == R.id.return_scan_result) {
+        cameraManager.requestPreviewFrame(decodeThread.getHandler(), R.id.zdecode);
+    } else if (message.what == R.id.zreturn_scan_result) {
         Log.d(TAG, "Got return scan result message");
         activity.setResult(Activity.RESULT_OK, (Intent) message.obj);
         activity.finish();
@@ -107,7 +107,7 @@ public final class CaptureActivityHandler extends Handler {
   public void quitSynchronously() {
     state = State.DONE;
     cameraManager.stopPreview();
-    Message quit = Message.obtain(decodeThread.getHandler(), R.id.quit);
+    Message quit = Message.obtain(decodeThread.getHandler(), R.id.zquit);
     quit.sendToTarget();
     try {
       // Wait at most half a second; should be enough time, and onPause() will timeout quickly
@@ -117,14 +117,14 @@ public final class CaptureActivityHandler extends Handler {
     }
 
     // Be absolutely sure we don't send any queued up messages
-    removeMessages(R.id.decode_succeeded);
-    removeMessages(R.id.decode_failed);
+    removeMessages(R.id.zdecode_succeeded);
+    removeMessages(R.id.zdecode_failed);
   }
 
   private void restartPreviewAndDecode() {
     if (state == State.SUCCESS) {
       state = State.PREVIEW;
-      cameraManager.requestPreviewFrame(decodeThread.getHandler(), R.id.decode);
+      cameraManager.requestPreviewFrame(decodeThread.getHandler(), R.id.zdecode);
       activity.drawViewfinder();
     }
   }

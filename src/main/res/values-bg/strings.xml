@@ -19,7 +19,7 @@
  limitations under the License.
  -->
 <resources>
-  <string name="button_ok">ОК</string>
-  <string name="msg_camera_framework_bug">Съжаляваме, срещнахме проблем с камерата. Може да се наложи да рестартирате устройството си.</string>
-  <string name="msg_default_status">Сложете баркода вътре в правоъгълника за да го сканирате.</string>
+  <string name="zbutton_ok">ОК</string>
+  <string name="zmsg_camera_framework_bug">Съжаляваме, срещнахме проблем с камерата. Може да се наложи да рестартирате устройството си.</string>
+  <string name="zmsg_default_status">Сложете баркода вътре в правоъгълника за да го сканирате.</string>
 </resources>

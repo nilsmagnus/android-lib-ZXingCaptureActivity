@@ -15,6 +15,8 @@ repositories {
 
 dependencies {
     compile 'com.google.zxing:core:3.2.1'
+    compile "com.android.support:support-v4:23.2.1"
+
 }
 
 tasks.withType(JavaCompile) {

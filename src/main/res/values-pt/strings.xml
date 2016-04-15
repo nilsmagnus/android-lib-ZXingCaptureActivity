@@ -19,7 +19,7 @@
  limitations under the License.
  -->
 <resources>
-  <string name="button_ok">OK</string>
-  <string name="msg_camera_framework_bug">Desculpe, a câmera do Android encontrou um problema. Poderá precisar de reiniciar o dispositivo.</string>
-  <string name="msg_default_status">Alinhar código de barras com o exemplo para ser lido.</string>
+  <string name="zbutton_ok">OK</string>
+  <string name="zmsg_camera_framework_bug">Desculpe, a câmera do Android encontrou um problema. Poderá precisar de reiniciar o dispositivo.</string>
+  <string name="zmsg_default_status">Alinhar código de barras com o exemplo para ser lido.</string>
 </resources>

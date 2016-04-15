@@ -19,7 +19,7 @@
  limitations under the License.
  -->
 <resources>
-  <string name="button_ok">OK</string>
-  <string name="msg_camera_framework_bug">Omlouváme se, fotoaparát má problém. Možná bude nutné restartovat zařízení</string>
-  <string name="msg_default_status">Strefte se čtverečkem na čárový kód</string>
+  <string name="zbutton_ok">OK</string>
+  <string name="zmsg_camera_framework_bug">Omlouváme se, fotoaparát má problém. Možná bude nutné restartovat zařízení</string>
+  <string name="zmsg_default_status">Strefte se čtverečkem na čárový kód</string>
 </resources>

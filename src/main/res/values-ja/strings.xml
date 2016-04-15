@@ -19,7 +19,7 @@
  limitations under the License.
  -->
 <resources>
-  <string name="button_ok">OK</string>
-  <string name="msg_camera_framework_bug">Android のカメラに問題が発生しました。 デバイスを再起動することで直る可能性があります。</string>
-  <string name="msg_default_status">QR コードを画面の読み取り範囲内に写すとスキャンします。</string>
+  <string name="zbutton_ok">OK</string>
+  <string name="zmsg_camera_framework_bug">Android のカメラに問題が発生しました。 デバイスを再起動することで直る可能性があります。</string>
+  <string name="zmsg_default_status">QR コードを画面の読み取り範囲内に写すとスキャンします。</string>
 </resources>

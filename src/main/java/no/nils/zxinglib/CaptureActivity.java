@@ -27,15 +27,20 @@ import com.google.zxing.ResultMetadataType;
 import com.google.zxing.ResultPoint;
 import no.nils.zxinglib.camera.CameraManager;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
@@ -44,6 +49,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -58,9 +64,10 @@ import java.util.Map;
  * @author Sean Owen
  * @author Yu Nobuoka
  */
-public final class CaptureActivity extends Activity implements SurfaceHolder.Callback {
+public class CaptureActivity extends Activity implements SurfaceHolder.Callback {
 
   private static final String TAG = CaptureActivity.class.getSimpleName();
+  private static final int MY_PERMISSIONS_REQUEST_CAMERA = 12223;
 
   private CameraManager cameraManager;
   private CaptureActivityHandler handler;
@@ -68,7 +75,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   private TextView statusView;
   private boolean hasSurface;
   private Collection<BarcodeFormat> decodeFormats;
-  private Map<DecodeHintType,?> decodeHints;
+  private Map<DecodeHintType, ?> decodeHints;
   private String characterSet;
   private AmbientLightManager ambientLightManager;
 
@@ -92,9 +99,61 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     setContentView(R.layout.capture);
 
+    int currentapiVersion = Build.VERSION.SDK_INT;
+    if (currentapiVersion >= Build.VERSION_CODES.LOLLIPOP && ContextCompat.checkSelfPermission(this,
+            Manifest.permission.CAMERA)
+            != PackageManager.PERMISSION_GRANTED) {
+
+      // Should we show an explanation?
+      if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+              Manifest.permission.CAMERA)) {
+
+        // Show an expanation to the user *asynchronously* -- don't block
+        // this thread waiting for the user's response! After the user
+        // sees the explanation, try again to request the permission.
+
+      } else {
+
+        // No explanation needed, we can request the permission.
+
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.CAMERA},
+                MY_PERMISSIONS_REQUEST_CAMERA);
+
+        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+        // app-defined int constant. The callback method gets the
+        // result of the request.
+      }
+    }
+
     hasSurface = false;
     ambientLightManager = new AmbientLightManager(this,
-        CaptureActivityIntents.getFrontLightAutoMode(getIntent()));
+            CaptureActivityIntents.getFrontLightAutoMode(getIntent()));
+  }
+
+  @Override
+  public void onRequestPermissionsResult(int requestCode,
+                                         String permissions[], int[] grantResults) {
+    switch (requestCode) {
+      case MY_PERMISSIONS_REQUEST_CAMERA: {
+        // If request is cancelled, the result arrays are empty.
+        if (grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+          // permission was granted, yay! Do the
+          // contacts-related task you need to do.
+
+        } else {
+
+          // permission denied, boo! Disable the
+          // functionality that depends on this permission.
+        }
+        return;
+      }
+
+      // other 'case' lines to check for other
+      // permissions this app might request
+    }
   }
 
   @Override
@@ -122,11 +181,11 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
       // surfaceCreated() won't be called, so init the camera here.
       initCamera(surfaceHolder);
     } else {
-        // Install the callback and wait for surfaceCreated() to init the camera.
-        surfaceHolder.addCallback(this);
-        // deprecated setting, but required on Android versions prior to 3.0
-        // See: http://developer.android.com/guide/topics/media/camera.html
-        surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+      // Install the callback and wait for surfaceCreated() to init the camera.
+      surfaceHolder.addCallback(this);
+      // deprecated setting, but required on Android versions prior to 3.0
+      // See: http://developer.android.com/guide/topics/media/camera.html
+      surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     }
 
     ambientLightManager.start(cameraManager);
@@ -138,24 +197,24 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
     if (intent != null) {
 
-        // Scan the formats the intent requested, and return the result to the calling activity.
-        decodeFormats = DecodeFormatManager.parseDecodeFormats(intent);
-        decodeHints = DecodeHintManager.parseDecodeHints(intent);
+      // Scan the formats the intent requested, and return the result to the calling activity.
+      decodeFormats = DecodeFormatManager.parseDecodeFormats(intent);
+      decodeHints = DecodeHintManager.parseDecodeHints(intent);
 
-        if (intent.hasExtra(Intents.Scan.WIDTH) && intent.hasExtra(Intents.Scan.HEIGHT)) {
-          int width = CaptureActivityIntents.getWidthOfScanningRectangleInPxOrZero(intent);
-          int height = CaptureActivityIntents.getHeightOfScanningRectangleInPxOrZero(intent);
-          if (width > 0 && height > 0) {
-            cameraManager.setManualFramingRect(width, height);
-          }
+      if (intent.hasExtra(Intents.Scan.WIDTH) && intent.hasExtra(Intents.Scan.HEIGHT)) {
+        int width = CaptureActivityIntents.getWidthOfScanningRectangleInPxOrZero(intent);
+        int height = CaptureActivityIntents.getHeightOfScanningRectangleInPxOrZero(intent);
+        if (width > 0 && height > 0) {
+          cameraManager.setManualFramingRect(width, height);
         }
-        
-        String customPromptMessage = CaptureActivityIntents.getPromptMessageOrNull(intent);
-        if (customPromptMessage != null) {
-          statusView.setText(customPromptMessage);
-        }
+      }
 
-        characterSet = CaptureActivityIntents.getDecodeHintCharacterSetOrNull(intent);
+      String customPromptMessage = CaptureActivityIntents.getPromptMessageOrNull(intent);
+      if (customPromptMessage != null) {
+        statusView.setText(customPromptMessage);
+      }
+
+      characterSet = CaptureActivityIntents.getDecodeHintCharacterSetOrNull(intent);
 
     }
   }
@@ -221,9 +280,9 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   /**
    * A valid barcode has been found, so give an indication of success and show the results.
    *
-   * @param rawResult The contents of the barcode.
+   * @param rawResult   The contents of the barcode.
    * @param scaleFactor amount by which thumbnail was scaled
-   * @param barcode   A greyscale bitmap of the camera data which was decoded.
+   * @param barcode     A greyscale bitmap of the camera data which was decoded.
    */
   public void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
     boolean fromLiveScan = barcode != null;
@@ -238,9 +297,9 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   /**
    * Superimpose a line for 1D or dots for 2D to highlight the key features of the barcode.
    *
-   * @param barcode   A bitmap of the captured image.
+   * @param barcode     A bitmap of the captured image.
    * @param scaleFactor amount by which thumbnail was scaled
-   * @param rawResult The decoded results which contains the points to draw.
+   * @param rawResult   The decoded results which contains the points to draw.
    */
   private void drawResultPoints(Bitmap barcode, float scaleFactor, Result rawResult) {
     ResultPoint[] points = rawResult.getResultPoints();
@@ -252,8 +311,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         paint.setStrokeWidth(4.0f);
         drawLine(canvas, paint, points[0], points[1], scaleFactor);
       } else if (points.length == 4 &&
-                 (rawResult.getBarcodeFormat() == BarcodeFormat.UPC_A ||
-                  rawResult.getBarcodeFormat() == BarcodeFormat.EAN_13)) {
+              (rawResult.getBarcodeFormat() == BarcodeFormat.UPC_A ||
+                      rawResult.getBarcodeFormat() == BarcodeFormat.EAN_13)) {
         // Hacky special case -- draw two lines, for the barcode and metadata
         drawLine(canvas, paint, points[0], points[1], scaleFactor);
         drawLine(canvas, paint, points[2], points[3], scaleFactor);
@@ -270,11 +329,11 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
   private static void drawLine(Canvas canvas, Paint paint, ResultPoint a, ResultPoint b, float scaleFactor) {
     if (a != null && b != null) {
-      canvas.drawLine(scaleFactor * a.getX(), 
-                      scaleFactor * a.getY(), 
-                      scaleFactor * b.getX(), 
-                      scaleFactor * b.getY(), 
-                      paint);
+      canvas.drawLine(scaleFactor * a.getX(),
+              scaleFactor * a.getY(),
+              scaleFactor * b.getX(),
+              scaleFactor * b.getY(),
+              paint);
     }
   }
 
@@ -293,45 +352,45 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
       }
       statusView.setText(rawResultString);
     }
-      
-      // Hand back whatever action they requested - this can be changed to Intents.Scan.ACTION when
-      // the deprecated intent is retired.
-      Intent intent = new Intent(getIntent().getAction());
-      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-      intent.putExtra(Intents.Scan.RESULT, rawResult.toString());
-      intent.putExtra(Intents.Scan.RESULT_FORMAT, rawResult.getBarcodeFormat().toString());
-      byte[] rawBytes = rawResult.getRawBytes();
-      if (rawBytes != null && rawBytes.length > 0) {
-        intent.putExtra(Intents.Scan.RESULT_BYTES, rawBytes);
+
+    // Hand back whatever action they requested - this can be changed to Intents.Scan.ACTION when
+    // the deprecated intent is retired.
+    Intent intent = new Intent(getIntent().getAction());
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+    intent.putExtra(Intents.Scan.RESULT, rawResult.toString());
+    intent.putExtra(Intents.Scan.RESULT_FORMAT, rawResult.getBarcodeFormat().toString());
+    byte[] rawBytes = rawResult.getRawBytes();
+    if (rawBytes != null && rawBytes.length > 0) {
+      intent.putExtra(Intents.Scan.RESULT_BYTES, rawBytes);
+    }
+    Map<ResultMetadataType, ?> metadata = rawResult.getResultMetadata();
+    if (metadata != null) {
+      if (metadata.containsKey(ResultMetadataType.UPC_EAN_EXTENSION)) {
+        intent.putExtra(Intents.Scan.RESULT_UPC_EAN_EXTENSION,
+                metadata.get(ResultMetadataType.UPC_EAN_EXTENSION).toString());
       }
-      Map<ResultMetadataType,?> metadata = rawResult.getResultMetadata();
-      if (metadata != null) {
-        if (metadata.containsKey(ResultMetadataType.UPC_EAN_EXTENSION)) {
-          intent.putExtra(Intents.Scan.RESULT_UPC_EAN_EXTENSION,
-                          metadata.get(ResultMetadataType.UPC_EAN_EXTENSION).toString());
-        }
-        Number orientation = (Number) metadata.get(ResultMetadataType.ORIENTATION);
-        if (orientation != null) {
-          intent.putExtra(Intents.Scan.RESULT_ORIENTATION, orientation.intValue());
-        }
-        String ecLevel = (String) metadata.get(ResultMetadataType.ERROR_CORRECTION_LEVEL);
-        if (ecLevel != null) {
-          intent.putExtra(Intents.Scan.RESULT_ERROR_CORRECTION_LEVEL, ecLevel);
-        }
-        @SuppressWarnings("unchecked")
-        Iterable<byte[]> byteSegments = (Iterable<byte[]>) metadata.get(ResultMetadataType.BYTE_SEGMENTS);
-        if (byteSegments != null) {
-          int i = 0;
-          for (byte[] byteSegment : byteSegments) {
-            intent.putExtra(Intents.Scan.RESULT_BYTE_SEGMENTS_PREFIX + i, byteSegment);
-            i++;
-          }
+      Number orientation = (Number) metadata.get(ResultMetadataType.ORIENTATION);
+      if (orientation != null) {
+        intent.putExtra(Intents.Scan.RESULT_ORIENTATION, orientation.intValue());
+      }
+      String ecLevel = (String) metadata.get(ResultMetadataType.ERROR_CORRECTION_LEVEL);
+      if (ecLevel != null) {
+        intent.putExtra(Intents.Scan.RESULT_ERROR_CORRECTION_LEVEL, ecLevel);
+      }
+      @SuppressWarnings("unchecked")
+      Iterable<byte[]> byteSegments = (Iterable<byte[]>) metadata.get(ResultMetadataType.BYTE_SEGMENTS);
+      if (byteSegments != null) {
+        int i = 0;
+        for (byte[] byteSegment : byteSegments) {
+          intent.putExtra(Intents.Scan.RESULT_BYTE_SEGMENTS_PREFIX + i, byteSegment);
+          i++;
         }
       }
-      sendReplyMessage(R.id.return_scan_result, intent, resultDurationMS);
+    }
+    sendReplyMessage(R.id.zreturn_scan_result, intent, resultDurationMS);
 
   }
-  
+
   private void sendReplyMessage(int id, Object arg, long delayMS) {
     if (handler != null) {
       Message message = Message.obtain(handler, id, arg);
@@ -373,16 +432,12 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   }
 
   protected String getDefaultStatusMessage() {
-    return getResources().getString(R.string.msg_default_status);
+    return getResources().getString(R.string.zmsg_default_status);
   }
 
   private void displayFrameworkBugMessageAndExit() {
-    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setTitle(getBugMessageTitle());
-    builder.setMessage(getString(R.string.msg_camera_framework_bug));
-    builder.setPositiveButton(R.string.button_ok, new FinishListener(this));
-    builder.setOnCancelListener(new FinishListener(this));
-    builder.show();
+    Toast.makeText(CaptureActivity.this, "Error in camera", Toast.LENGTH_SHORT).show();
+    this.finish();
   }
 
   private void resetStatusView() {

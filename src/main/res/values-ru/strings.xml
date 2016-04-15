@@ -19,7 +19,7 @@
  limitations under the License.
  -->
 <resources>
-  <string name="button_ok">OK</string>
-  <string name="msg_camera_framework_bug">К сожалению, возникла ошибка камеры. Вам может потребоваться перезагрузка устройства.</string>
-  <string name="msg_default_status">Чтобы сканировать штрих-код, поместите его в прямоугольник видоискателя.</string>
+  <string name="zbutton_ok">OK</string>
+  <string name="zmsg_camera_framework_bug">К сожалению, возникла ошибка камеры. Вам может потребоваться перезагрузка устройства.</string>
+  <string name="zmsg_default_status">Чтобы сканировать штрих-код, поместите его в прямоугольник видоискателя.</string>
 </resources>

@@ -19,7 +19,7 @@
  limitations under the License.
  -->
 <resources>
-  <string name="button_ok">Ados</string>
-  <string name="msg_camera_framework_bug">Barkatu, Android kamerak arazo bat izan du. Behar bada gailua berrabiarazi beharko duzu.</string>
-  <string name="msg_default_status">Kokatu barra-kode bat laukizuzenaren barruan eskaneatzeko.</string>
+  <string name="zbutton_ok">Ados</string>
+  <string name="zmsg_camera_framework_bug">Barkatu, Android kamerak arazo bat izan du. Behar bada gailua berrabiarazi beharko duzu.</string>
+  <string name="zmsg_default_status">Kokatu barra-kode bat laukizuzenaren barruan eskaneatzeko.</string>
 </resources>

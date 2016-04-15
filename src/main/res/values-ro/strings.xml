@@ -19,7 +19,7 @@
  limitations under the License.
  -->
 <resources>
-  <string name="button_ok">Acceptă</string>
-  <string name="msg_camera_framework_bug">Probleme cu camera foto. Repornește dispozitivul.</string>
-  <string name="msg_default_status">Plasează codul de bare în interiorul vizorului pentru a-l scana</string>
+  <string name="zbutton_ok">Acceptă</string>
+  <string name="zmsg_camera_framework_bug">Probleme cu camera foto. Repornește dispozitivul.</string>
+  <string name="zmsg_default_status">Plasează codul de bare în interiorul vizorului pentru a-l scana</string>
 </resources>

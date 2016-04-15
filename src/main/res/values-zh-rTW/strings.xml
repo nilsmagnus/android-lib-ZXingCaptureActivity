@@ -19,7 +19,7 @@
  limitations under the License.
  -->
 <resources>
-  <string name="button_ok">確定</string>
-  <string name="msg_camera_framework_bug">很抱歉，相機出現問題。您可能需要重新啟動設備。</string>
-  <string name="msg_default_status">將條碼置於鏡頭範圍內以進行掃描。</string>
+  <string name="zbutton_ok">確定</string>
+  <string name="zmsg_camera_framework_bug">很抱歉，相機出現問題。您可能需要重新啟動設備。</string>
+  <string name="zmsg_default_status">將條碼置於鏡頭範圍內以進行掃描。</string>
 </resources>

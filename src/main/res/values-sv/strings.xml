@@ -19,7 +19,7 @@
  limitations under the License.
  -->
 <resources>
-  <string name="button_ok">OK</string>
-  <string name="msg_camera_framework_bug">Det uppstod tyvärr ett fel med Androidkameran.</string>
-  <string name="msg_default_status">Placera steckkoden inom sökarens rektangel för att läsa den.</string>
+  <string name="zbutton_ok">OK</string>
+  <string name="zmsg_camera_framework_bug">Det uppstod tyvärr ett fel med Androidkameran.</string>
+  <string name="zmsg_default_status">Placera steckkoden inom sökarens rektangel för att läsa den.</string>
 </resources>
