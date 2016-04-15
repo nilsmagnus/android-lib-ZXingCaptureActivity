@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package info.vividcode.android.zxing;
+package no.nils.zxinglib;
 
 /**
  * This class provides the constants to use when sending an Intent to Barcode Scanner.

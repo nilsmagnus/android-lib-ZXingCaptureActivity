@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package info.vividcode.android.zxing;
+package no.nils.zxinglib;
 
 import android.app.Activity;
 import android.content.DialogInterface;

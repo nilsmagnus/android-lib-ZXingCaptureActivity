@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package info.vividcode.android.zxing;
+package no.nils.zxinglib;
 
 import android.graphics.Bitmap;
 import com.google.zxing.BinaryBitmap;
@@ -37,6 +37,7 @@ import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Map;
+
 
 final class DecodeHandler extends Handler {
 

@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package info.vividcode.android.zxing.camera;
+package no.nils.zxinglib.camera;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -28,7 +28,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import com.google.zxing.PlanarYUVLuminanceSource;
-import info.vividcode.android.zxing.camera.open.OpenCameraInterface;
+import no.nils.zxinglib.camera.open.OpenCameraInterface;
 
 import java.io.IOException;
 

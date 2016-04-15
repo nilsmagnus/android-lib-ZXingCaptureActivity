@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package info.vividcode.android.zxing.camera;
+package no.nils.zxinglib.camera;
 
 import android.graphics.Point;
 import android.hardware.Camera;

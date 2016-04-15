@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package info.vividcode.android.zxing.camera.open;
+package no.nils.zxinglib.camera.open;
 
 import android.annotation.TargetApi;
 import android.hardware.Camera;

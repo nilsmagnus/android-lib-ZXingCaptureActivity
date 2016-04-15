@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package info.vividcode.android.zxing;
+package no.nils.zxinglib;
 
 import java.util.EnumMap;
 import java.util.Map;

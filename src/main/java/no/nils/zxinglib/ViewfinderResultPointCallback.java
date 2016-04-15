@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package info.vividcode.android.zxing;
+package no.nils.zxinglib;
 
 import com.google.zxing.ResultPoint;
 import com.google.zxing.ResultPointCallback;

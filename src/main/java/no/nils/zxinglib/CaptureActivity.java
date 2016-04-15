@@ -18,14 +18,14 @@
  * limitations under the License.
  */
 
-package info.vividcode.android.zxing;
+package no.nils.zxinglib;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
 import com.google.zxing.ResultMetadataType;
 import com.google.zxing.ResultPoint;
-import info.vividcode.android.zxing.camera.CameraManager;
+import no.nils.zxinglib.camera.CameraManager;
 
 import android.app.Activity;
 import android.app.AlertDialog;

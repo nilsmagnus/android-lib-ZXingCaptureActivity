@@ -18,10 +18,11 @@
  * limitations under the License.
  */
 
-package info.vividcode.android.zxing;
+package no.nils.zxinglib;
 
 import com.google.zxing.ResultPoint;
-import info.vividcode.android.zxing.camera.CameraManager;
+
+import no.nils.zxinglib.camera.CameraManager;
 
 import android.content.Context;
 import android.content.res.Resources;

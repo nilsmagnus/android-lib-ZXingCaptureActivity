@@ -19,12 +19,12 @@
  limitations under the License.
  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="info.vividcode.android.zxing">
+          package="no.nils.zxinglib">
 
   <uses-permission android:name="android.permission.CAMERA" />
   <uses-permission android:name="android.permission.FLASHLIGHT"/>
 
-  <uses-sdk android:minSdkVersion="7" />
+  <uses-sdk android:minSdkVersion="16" />
 
   <!-- Don't require camera, as this requires a rear camera. This allows it to work on the Nexus 7 -->
   <uses-feature android:name="android.hardware.camera" android:required="false"/>

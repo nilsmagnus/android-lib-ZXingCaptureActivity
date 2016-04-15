@@ -18,14 +18,14 @@
  * limitations under the License.
  */
 
-package info.vividcode.android.zxing;
+package no.nils.zxinglib;
 
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import info.vividcode.android.zxing.camera.CameraManager;
+import no.nils.zxinglib.camera.CameraManager;
 
 /**
  * Detects ambient light and switches on the front light when very dark, and off again when sufficiently light.
